@@ -1,6 +1,6 @@
  # Trabajo E-commerce
 
-Esta es una aplicación de ejemplo de e-commerce desarrollada con React. Contiene listado de productos, detalle y carrito de compras.
+Esta es una aplicación de ejemplo de e-commerce desarrollada con React. Contiene listado de productos, detalle y carrito de compras, nombre ficticio "Tech Colonia".
 
  Tecnologías principales:
 - React (v19)
@@ -32,7 +32,3 @@ Estructura relevante:
 - `src/` — código fuente (componentes, estilos, entradas).
 - `public/` — activos estáticos y `index.html`.
 - `package.json` — dependencias y scripts.
-
-Notas:
-- Si quieres que el README incluya más detalles (diagramas, despliegue, rutas API, o instrucciones de desarrollo), dime qué añadir y lo amplío.
-
