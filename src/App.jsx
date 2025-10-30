@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const styles = `
   :root {
     --tiendamia-red: #FF243A;
-    --tiendamia-dark-red: #CC1C2E;
+    --tiendamia-dark-red: #FF243A;
     --tiendamia-light-gray: #F5F5F5;
     --tiendamia-gray: #666666;
   }
