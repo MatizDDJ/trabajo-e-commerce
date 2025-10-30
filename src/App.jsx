@@ -6,6 +6,114 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Estilos personalizados
+const styles = `
+  :root {
+    --tiendamia-red: #FF243A;
+    --tiendamia-dark-red: #CC1C2E;
+    --tiendamia-light-gray: #F5F5F5;
+    --tiendamia-gray: #666666;
+  }
+
+  .hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+  }
+  
+  .transition-all {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  section {
+    scroll-margin-top: 80px;
+  }
+
+  .navbar {
+    background-color: var(--tiendamia-red) !important;
+  }
+
+  .nav-link {
+    color: white !important;
+    font-weight: 500;
+  }
+
+  .nav-link:hover {
+    color: rgba(255,255,255,0.8) !important;
+  }
+
+  .btn-outline-light:hover {
+    background-color: var(--tiendamia-dark-red);
+    border-color: var(--tiendamia-dark-red);
+  }
+
+  .section-title {
+    color: var(--tiendamia-red);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    border: none;
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    border-color: var(--tiendamia-red);
+  }
+
+  .badge.bg-primary {
+    background-color: var(--tiendamia-red) !important;
+  }
+
+  .btn-primary {
+    background-color: var(--tiendamia-red);
+    border-color: var(--tiendamia-red);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--tiendamia-dark-red);
+    border-color: var(--tiendamia-dark-red);
+  }
+
+  .text-primary {
+    color: var(--tiendamia-red) !important;
+  }
+
+  .footer {
+    background-color: var(--tiendamia-light-gray);
+    color: var(--tiendamia-gray);
+    padding: 2rem 0;
+  }
+
+  .product-price {
+    color: var(--tiendamia-red);
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  .category-header {
+    background: linear-gradient(45deg, var(--tiendamia-red), var(--tiendamia-dark-red));
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+// Agregar estilos al documento
+const styleSheet = document.createElement("style");
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
+
 // Crear el contexto del carrito
 const CartContext = createContext();
 
@@ -72,43 +180,86 @@ const Header = () => {
   const itemsCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-      <div className="container">
-        <Link className="navbar-brand" to="/">Mi Tienda</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Productos</Link>
-            </li>
-          </ul>
-          <Link to="/cart" className="btn btn-outline-light">
-            <FontAwesomeIcon icon={faShoppingCart} />
-            {itemsCount > 0 && <span className="ms-2 badge bg-danger">{itemsCount}</span>}
-          </Link>
+    <>
+      <div className="bg-dark text-white py-2">
+        <div className="container">
+          <div className="d-flex justify-content-end">
+            <span className="me-3">¡Envío gratis en compras mayores a $99!</span>
+          </div>
         </div>
       </div>
-    </nav>
+      <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div className="container">
+          <Link className="navbar-brand" to="/">
+            <h1 className="h4 mb-0">TechStore</h1>
+          </Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav me-auto">
+              <li className="nav-item">
+                <a className="nav-link" href="#technology">Tecnología</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#jewelery">Joyería</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#mensClothing">Moda Hombre</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#womensClothing">Moda Mujer</a>
+              </li>
+            </ul>
+            <Link to="/cart" className="btn btn-outline-light">
+              <FontAwesomeIcon icon={faShoppingCart} />
+              {itemsCount > 0 && <span className="ms-2 badge bg-light text-danger">{itemsCount}</span>}
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 
 // Product Card Component
 const ProductCard = ({ product }) => {
+  const discount = Math.floor(Math.random() * 30 + 10); // Simula un descuento entre 10% y 40%
+  const originalPrice = (product.price / (1 - discount/100)).toFixed(2);
+
   return (
-    <div className="col-12 col-md-6 col-lg-4 mb-4">
-      <div className="card h-100">
-        <img src={product.image} className="card-img-top p-3" alt={product.title} style={{ height: '200px', objectFit: 'contain' }} />
-        <div className="card-body d-flex flex-column">
-          <h5 className="card-title">{product.title}</h5>
-          <p className="card-text text-truncate">{product.description}</p>
-          <div className="mt-auto">
-            <p className="h5">${product.price.toFixed(2)}</p>
-            <Link to={`/product/${product.id}`} className="btn btn-primary">
-              Ver Detalles
-            </Link>
-          </div>
+    <div className="card h-100 shadow-sm hover-shadow transition-all">
+      <div className="position-relative">
+        <div className="position-absolute top-0 start-0 p-2">
+          <span className="badge bg-danger">
+            {discount}% OFF
+          </span>
+        </div>
+        <img 
+          src={product.image} 
+          className="card-img-top p-4" 
+          alt={product.title} 
+          style={{ height: '200px', objectFit: 'contain' }} 
+        />
+      </div>
+      <div className="card-body d-flex flex-column">
+        <h5 className="card-title text-truncate mb-2" style={{ fontSize: '0.9rem', height: '2.4rem', lineHeight: '1.2rem' }}>
+          {product.title}
+        </h5>
+        <div className="mb-2">
+          <small className="text-muted text-decoration-line-through">US$ {originalPrice}</small>
+          <div className="product-price">US$ {product.price.toFixed(2)}</div>
+        </div>
+        <p className="card-text small text-muted mb-3" style={{ fontSize: '0.8rem' }}>
+          ¡Comprá en hasta 12 cuotas sin interés!
+        </p>
+        <div className="mt-auto">
+          <Link 
+            to={`/product/${product.id}`} 
+            className="btn btn-primary w-100 hover-lift"
+          >
+            Ver Detalles
+          </Link>
         </div>
       </div>
     </div>
@@ -117,24 +268,50 @@ const ProductCard = ({ product }) => {
 
 // Product List Component
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState({
+    electronics: [],
+    jewelery: [],
+    mensClothing: [],
+    womensClothing: []
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then(response => {
-        if (!response.ok) throw new Error('Error al cargar los productos');
-        return response.json();
-      })
-      .then(data => {
-        setProducts(data);
+    const fetchCategory = async (category) => {
+      try {
+        const response = await fetch(`https://fakestoreapi.com/products/category/${category}`);
+        if (!response.ok) throw new Error(`Error al cargar ${category}`);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    };
+
+    const loadAllCategories = async () => {
+      try {
+        const [electronics, jewelery, mensClothing, womensClothing] = await Promise.all([
+          fetchCategory('electronics'),
+          fetchCategory('jewelery'),
+          fetchCategory("men's clothing"),
+          fetchCategory("women's clothing")
+        ]);
+
+        setCategories({
+          electronics,
+          jewelery,
+          mensClothing,
+          womensClothing
+        });
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         setError(error.message);
         setLoading(false);
-      });
+      }
+    };
+
+    loadAllCategories();
   }, []);
 
   if (loading) {
@@ -157,12 +334,83 @@ const ProductList = () => {
 
   return (
     <div className="container">
-      <h1 className="mb-4">Nuestros Productos</h1>
-      <div className="row">
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <h1 className="text-center mb-5">Nuestros Productos</h1>
+      
+      {/* Sección Tecnología */}
+      <section id="technology" className="mb-5 pt-4">
+        <div className="category-header">
+          <div className="container">
+            <h2 className="mb-0">Tecnología</h2>
+            <p className="mb-0">Las mejores ofertas en productos tecnológicos</p>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row g-4">
+            {categories.electronics.map(product => (
+              <div key={product.id} className="col-12 col-md-6 col-lg-3">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sección Joyería */}
+      <section id="jewelery" className="mb-5 pt-4">
+        <div className="category-header">
+          <div className="container">
+            <h2 className="mb-0">Joyería</h2>
+            <p className="mb-0">Accesorios exclusivos para ti</p>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row g-4">
+            {categories.jewelery.map(product => (
+              <div key={product.id} className="col-12 col-md-6 col-lg-3">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sección Moda Hombre */}
+      <section id="mensClothing" className="mb-5 pt-4">
+        <div className="category-header">
+          <div className="container">
+            <h2 className="mb-0">Moda Hombre</h2>
+            <p className="mb-0">Las últimas tendencias en moda masculina</p>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row g-4">
+            {categories.mensClothing.map(product => (
+              <div key={product.id} className="col-12 col-md-6 col-lg-3">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sección Moda Mujer */}
+      <section id="womensClothing" className="mb-5 pt-4">
+        <div className="category-header">
+          <div className="container">
+            <h2 className="mb-0">Moda Mujer</h2>
+            <p className="mb-0">Descubre las últimas tendencias</p>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row g-4">
+            {categories.womensClothing.map(product => (
+              <div key={product.id} className="col-12 col-md-6 col-lg-3">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
