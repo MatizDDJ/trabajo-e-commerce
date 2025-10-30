@@ -119,7 +119,26 @@ const CartContext = createContext();
 
 // Provider del carrito
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    try {
+      const stored = localStorage.getItem('cart');
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      if (!cart || cart.length === 0) {
+        localStorage.removeItem('cart');
+      } else {
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+    } catch (e) {
+      // ignore localStorage errors (e.g., storage full or disabled)
+    }
+  }, [cart]);
 
   const addToCart = (product, quantity = 1) => {
     setCart(currentCart => {
@@ -153,7 +172,7 @@ const CartProvider = ({ children }) => {
   };
 
   const clearCart = () => {
-    setCart([]);
+  setCart([]);
   };
 
   const calculateTotal = () => {
