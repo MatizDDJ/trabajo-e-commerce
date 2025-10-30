@@ -193,7 +193,7 @@ const CartProvider = ({ children }) => {
   );
 };
 
-// Header Component
+// Componente Encabezado
 const Header = () => {
   const { cart } = useContext(CartContext);
   const itemsCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -241,7 +241,7 @@ const Header = () => {
   );
 };
 
-// Product Card Component
+// Tarjeta de Producto
 const ProductCard = ({ product }) => {
   const discount = Math.floor(Math.random() * 30 + 10); // Simula un descuento entre 10% y 40%
   const originalPrice = (product.price / (1 - discount/100)).toFixed(2);
@@ -285,7 +285,7 @@ const ProductCard = ({ product }) => {
   );
 };
 
-// Product List Component
+// Lista de Productos
 const ProductList = () => {
   const [categories, setCategories] = useState({
     electronics: [],
@@ -334,13 +334,8 @@ const ProductList = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    );
+    // Mientras se cargan los datos no mostramos nada (sin spinner)
+    return null;
   }
 
   if (error) {
@@ -434,7 +429,7 @@ const ProductList = () => {
   );
 };
 
-// Product Detail Component
+// Detalle del Producto
 const ProductDetail = () => {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
@@ -460,13 +455,8 @@ const ProductDetail = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    );
+    // Mientras se carga el detalle no mostramos nada (sin spinner)
+    return null;
   }
 
   if (error) {
@@ -516,7 +506,7 @@ const ProductDetail = () => {
   );
 };
 
-// Cart View Component
+// Vista del Carrito
 const CartView = () => {
   const { cart, removeFromCart, updateQuantity, calculateTotal } = useContext(CartContext);
   const navigate = useNavigate();
@@ -586,7 +576,7 @@ const CartView = () => {
   );
 };
 
-// Checkout Component
+// Componente de Checkout (simulado)
 const CheckoutSimulated = () => {
   const navigate = useNavigate();
   const { clearCart } = useContext(CartContext);
@@ -659,7 +649,7 @@ const CheckoutSimulated = () => {
   );
 };
 
-// Not Found Component
+// Componente No Encontrado
 const NotFound = () => {
   return (
     <div className="container text-center py-5">
@@ -671,7 +661,7 @@ const NotFound = () => {
   );
 };
 
-// Main App Component
+// Componente Principal
 const App = () => {
   return (
     <Router>
