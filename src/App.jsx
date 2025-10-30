@@ -210,7 +210,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            <h1 className="h4 mb-0">TechStore</h1>
+            <h1 className="h4 mb-0">Tech Colonia</h1>
           </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span className="navbar-toggler-icon"></span>
@@ -689,7 +689,7 @@ const App = () => {
           </main>
           <footer className="bg-light py-3 mt-auto">
             <div className="container text-center">
-              <p className="mb-0">&copy; 2025 Mi Tienda. Todos los derechos reservados.</p>
+              <p className="mb-0">&copy; 2025 Tech Colonia. Todos los derechos reservados.</p>
             </div>
           </footer>
           <ToastContainer position="bottom-right" />
